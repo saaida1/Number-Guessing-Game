@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: gray;
+        }
+        h1 {
+            color: #333;
+        }
+        #game-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            ;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Number Guessing Game</h1>
+    </header>
+    <main>
+        <div id="game-container">
+            <p>Guess a number between 1 and 100:</p>
+            <input type="number" id="guess" min="1" max="100">
+            <button onclick="checkGuess()">Submit Guess</button>
+            <p id="result"></p>
+            <button onclick="resetGame()">New Game</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Django Project</p>
+    </footer>
+
+    <script>
+        let targetNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guess').value);
+            attempts++;
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                document.getElementById('result').textContent = 'Please enter a valid number between 1 and 100.';
+            } else if (guess === targetNumber) {
+                document.getElementById('result').textContent = `Congratulations! You guessed the number in ${attempts} attempts!`;
+            } else if (guess < targetNumber) {
+                document.getElementById('result').textContent = 'Too low. Try again!';
+            } else {
+                document.getElementById('result').textContent = 'Too high. Try again!';
+            }
+        }
+
+        function resetGame() {
+            targetNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('guess').value = '';
+            document.getElementById('result').textContent = '';
+        }
+    </script>
+</body>
+</html>
