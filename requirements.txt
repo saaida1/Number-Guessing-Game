@@ -1,4 +1,3 @@
 #this file is used to install the required packages for the project
 django==5.0.4
-python==3.12.3
 

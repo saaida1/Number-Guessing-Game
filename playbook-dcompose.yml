@@ -1,0 +1,19 @@
+---
+- name: "Automate DockerCompose Build using Ansible"
+  hosts: localhost
+  tasks:
+    #1-dockercompose down in case it didn't work
+  - name: Stop & Remove the running containers
+    command: docker-compose down
+    ignore_errors: yes
+
+
+    #2-we remove the image work-directory_app
+  - name: Remove the used image
+    command: docker rmi number-guessing-game_app 
+    ignore_errors: yes
+
+
+    #dockersompose up again 
+  - name: Build existing dockerfile & run the container
+    command: docker-compose up -d

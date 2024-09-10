@@ -1,21 +1,30 @@
-#this file is used to automate the deployment of the k8s_lab application in case of any changes in the code or the deployment configuration
-
 ---
 - name: "Automate Docker Build using Ansible"
   hosts: localhost
   tasks:
     - name: Stop the running container
       command: docker stop django-container
-      ignore_errors: yes # Ignore the error if the container is not running already #for the first time deployment
-  
+      ignore_errors: yes
+
     - name: Remove the stopped container
       command: docker rm django-container
+      ignore_errors: yes
     
     - name: Remove the used image
       command: docker rmi django-image
+      ignore_errors: yes
 
-    - name: Build the New Docker image
+    - name: Build the new Docker image
       command: docker build -t django-image .
+
+    - name: Tag the image with the 'latest' tag
+      command: docker tag django-image saaida/my-django-app:latest
+
+    - name: Push the image with the 'latest' tag to Docker Hub
+      command: docker push saaida/my-django-app:latest
     
     - name: Run the Docker container
-      command: docker run -d -p 4000:8000 --name django-container django-image  #the 4000 is the port on the host machine and 8000 is the port on the container where the application is running
+      command: docker run -d -p 4000:8000 --name django-container django-image
+
+    # 4000 is the port on the host machine, and 8000 is the port on the container where the application is running
+
